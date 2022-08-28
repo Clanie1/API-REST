@@ -7,17 +7,20 @@ const connection = require("./database")
 app.use(express.json())
 
 app.get("/", (req, res) =>{
-    const tiempos = 'SELECT * FROM tiempos order by tiempo limit 5';
+    const tiempos = 'SELECT * FROM times';
     connection.query(tiempos, (err,results) => {
         if(err){
             console.log(err)
+        }
+        else{
+            console.log("get submited");
         }
         res.send(results)
     })
 })
 
 app.post("/", (req,res) =>{
-    const query = `INSERT INTO tiempos VALUES('${req.body.name}', ${req.body.tiempo});`
+    const query = `INSERT INTO times(name, time) VALUES('${req.body.name}', ${req.body.tiempo});`
     connection.query(query, (err, result)=>{
         if(err){
             console.log(err)
